@@ -9,6 +9,7 @@ import com.estimote.sdk.Region;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -37,11 +39,45 @@ public class MainActivity extends Activity {
 	}
 	
 	private void setupBeacons() {
+		
 		beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 			@Override
-			public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
+			public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
 				// TODO Auto-generated method stub
 				Log.i("kulak", "Beacons discovered: " + beacons);
+				final TextView infoView = ((TextView)findViewById(R.id.info));
+				final ImageView imageView = ((ImageView)findViewById(R.id.img));
+				
+				runOnUiThread(new Runnable() {
+					public void run() {
+
+						if(beacons.size() == 1) {
+							// we're in range of 1 estimote
+							int min =beacons.get(0).getMinor();
+							if(min == 1 || min == 2) {
+								// displaying offer
+								infoView.setText("Offer " + min);
+								// setting img
+								if(min == 1)
+									imageView.setBackgroundColor(Color.GREEN);
+								else
+									imageView.setBackgroundColor(Color.CYAN);
+								
+							} else {
+								// displaying no-offer
+								infoView.setText("Wrong offers.");
+								imageView.setBackgroundColor(Color.WHITE);
+							}
+						} else if(beacons.size() > 1) {
+							infoView.setText(beacons.size() + " offers available.");
+							imageView.setBackgroundColor(Color.WHITE);
+						} else {
+							infoView.setText("No offers");
+							imageView.setBackgroundColor(Color.WHITE);
+						}
+					}
+				});
+				
 				
 				String txt = "";
 				String sep = "";
@@ -50,7 +86,7 @@ public class MainActivity extends Activity {
 					sep = ", ";
 				}
 				
-				((TextView)findViewById(R.id.info)).setText(txt);
+//				((TextView)findViewById(R.id.info)).setText(txt);
 				
 			}
 		  });

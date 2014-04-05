@@ -7,22 +7,23 @@
     tools:ignore="MergeRootFrame" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Found Beacons:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="Searching beacons"
+        android:textSize="25dp"
+        android:layout_margin="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/info"
+    <ImageView
+        android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="24dp"
-        android:text="Beacons"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/info" />
 
 </RelativeLayout>
