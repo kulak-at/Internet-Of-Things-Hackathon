@@ -17,12 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.os.Build;
 
 public class MainActivity extends Activity {
 
 	  private static final String ESTIMOTE_PROXIMITY_UUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
-	  private static final Region ALL_ESTIMOTE_BEACONS = new Region("regionId", ESTIMOTE_PROXIMITY_UUID, null, null);
+	  private static final Region ALL_ESTIMOTE_BEACONS = new Region("regionId", ESTIMOTE_PROXIMITY_UUID, 6664, null);
 
 	  BeaconManager beaconManager;
 	@Override
@@ -41,6 +42,16 @@ public class MainActivity extends Activity {
 			public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
 				// TODO Auto-generated method stub
 				Log.i("kulak", "Beacons discovered: " + beacons);
+				
+				String txt = "";
+				String sep = "";
+				for(Beacon b : beacons) {
+					txt += sep + "<" + b.getMajor() + "," + b.getMinor() + ">";
+					sep = ", ";
+				}
+				
+				((TextView)findViewById(R.id.info)).setText(txt);
+				
 			}
 		  });
 	}
